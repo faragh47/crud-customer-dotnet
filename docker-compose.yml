@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  web:
+    image: ${DOCKER_REGISTRY-}web
+    build:
+      context: .
+      dockerfile: src/Web/Dockerfile
+
+  sql_server:
+    image: mcr.microsoft.com/azure-sql-edge
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Kratos1024
+      - MSSQL_SA_PASSWORD=Kratos1024
+      - MSSQL_TCP_PORT=1433
+    ports:
+      - "1433:1433"
