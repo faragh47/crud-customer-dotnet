@@ -2,29 +2,25 @@
 
 public class Customer : BaseAuditableEntity
 {
-    public int ListId { get; set; }
-
-    public string? Title { get; set; }
-
-    public string? Note { get; set; }
-
-    public PriorityLevel Priority { get; set; }
-
-    public DateTime? Reminder { get; set; }
-
-    private bool _done;
-    public bool Done
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public DateTime? DateOfBirth { get; set; }
+    public PhoneNumber PhoneNumber { get; set; }
+    public Email Email { get; set; }
+    public BankAccountNumber BankAccountNumber { get; set; }
+    public Customer(string firstName,
+                    string lastName,
+                    DateTime? dateOfBirth,
+                    PhoneNumber phoneNumber,
+                    Email email,
+                    BankAccountNumber bankAccountNumber)
     {
-        get => _done;
-        set
-        {
-            if (value && !_done)
-            {
-                AddDomainEvent(new CustomerCompletedEvent(this));
-            }
+        FirstName = firstName;
+        LastName = lastName;
+        DateOfBirth = dateOfBirth;
+        PhoneNumber = phoneNumber;
+        Email = email;
+        BankAccountNumber = bankAccountNumber;
 
-            _done = value;
-        }
     }
-
 }

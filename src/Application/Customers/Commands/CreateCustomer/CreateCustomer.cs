@@ -1,14 +1,18 @@
 ﻿using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Events;
+using CleanArchitecture.Domain.ValueObjects;
 
 namespace CleanArchitecture.Application.Customers.Commands.CreateCustomer;
 
 public record CreateCustomerCommand : IRequest<int>
 {
-    public int ListId { get; init; }
-
-    public string? Title { get; init; }
+    public string FirstName { get; set; } = "";
+    public string LastName { get; set; } = "";
+    public DateTime? DateOfBirth { get; set; }
+    public ulong PhoneNumber { get; set; }
+    public string Email { get; set; } = "";
+    public string BankAccountNumber { get; set; } = "";
 }
 
 public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, int>
@@ -22,19 +26,15 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
 
     public async Task<int> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
-        var entity = new Customer
-        {
-            ListId = request.ListId,
-            Title = request.Title,
-            Done = false
-        };
-
+        var entity = new Customer(request.FirstName,
+            request.LastName,
+            request.DateOfBirth,
+            new PhoneNumber(request.PhoneNumber),
+            new Email(request.Email),
+            new BankAccountNumber(request.BankAccountNumber));
         entity.AddDomainEvent(new CustomerCreatedEvent(entity));
-
         _context.Customers.Add(entity);
-
         await _context.SaveChangesAsync(cancellationToken);
-
         return entity.Id;
     }
 }

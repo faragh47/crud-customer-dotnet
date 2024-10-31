@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using CleanArchitecture.Domain.Constants;
 using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.Domain.ValueObjects;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -70,10 +71,11 @@ public class ApplicationDbContextInitialiser
         {
             _context.Customers.AddRange(new List<Customer>
             {
-                    new Customer { Title = "Make a todo list 📃" },
-                    new Customer { Title = "Check off the first item ✅" },
-                    new Customer { Title = "Realise you've already done two things on the list! 🤯"},
-                    new Customer { Title = "Reward yourself with a nice, long nap 🏆" }
+                    new Customer("Mohammadreza","Farghadani",
+                    DateTime.Now,
+                    new PhoneNumber(9124798930),
+                    new Email("Farghadani4747@gmail.com"),
+                    new BankAccountNumber("123456789"))
             });
             await _context.SaveChangesAsync();
         }

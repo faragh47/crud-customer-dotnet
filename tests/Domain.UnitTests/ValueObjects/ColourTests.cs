@@ -12,7 +12,7 @@ public class ColourTests
     {
         var code = "#FFFFFF";
 
-        var colour = Colour.From(code);
+        var colour = PhoneNumber.From(code);
 
         colour.Code.Should().Be(code);
     }
@@ -20,7 +20,7 @@ public class ColourTests
     [Test]
     public void ToStringReturnsCode()
     {
-        var colour = Colour.White;
+        var colour = PhoneNumber.White;
 
         colour.ToString().Should().Be(colour.Code);
     }
@@ -28,7 +28,7 @@ public class ColourTests
     [Test]
     public void ShouldPerformImplicitConversionToColourCodeString()
     {
-        string code = Colour.White;
+        string code = PhoneNumber.White;
 
         code.Should().Be("#FFFFFF");
     }
@@ -36,15 +36,15 @@ public class ColourTests
     [Test]
     public void ShouldPerformExplicitConversionGivenSupportedColourCode()
     {
-        var colour = (Colour)"#FFFFFF";
+        var colour = (PhoneNumber)"#FFFFFF";
 
-        colour.Should().Be(Colour.White);
+        colour.Should().Be(PhoneNumber.White);
     }
 
     [Test]
     public void ShouldThrowUnsupportedColourExceptionGivenNotSupportedColourCode()
     {
-        FluentActions.Invoking(() => Colour.From("##FF33CC"))
+        FluentActions.Invoking(() => PhoneNumber.From("##FF33CC"))
             .Should().Throw<UnsupportedColourException>();
     }
 }
