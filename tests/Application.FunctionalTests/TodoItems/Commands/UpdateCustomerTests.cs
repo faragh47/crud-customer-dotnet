@@ -11,7 +11,7 @@ public class UpdateCustomerTests : BaseTestFixture
     [Test]
     public async Task ShouldRequireValidCustomerId()
     {
-        var command = new UpdateCustomerCommand { Id = 99, Title = "New Title" };
+        var command = new UpdateCustomerCommand { Id = 99, FirstName = "New Title" };
         await FluentActions.Invoking(() => SendAsync(command)).Should().ThrowAsync<NotFoundException>();
     }
 
@@ -21,13 +21,23 @@ public class UpdateCustomerTests : BaseTestFixture
 
         var itemId = await SendAsync(new CreateCustomerCommand
         {
-            Title = "New Item"
+            FirstName = "محمدرضا",
+            LastName = "محمدرضا",
+            PhoneNumber = 9124798930,
+            DateOfBirth = DateTime.Now,
+            Email = "farghadani4747@gmail.com",
+            BankAccountNumber = "6219861057747882",
         });
 
         var command = new UpdateCustomerCommand
         {
             Id = itemId,
-            Title = "Updated Item Title"
+            FirstName = "محمدرضا",
+            LastName = "فرقدانی",
+            PhoneNumber = 9124798930,
+            DateOfBirth = DateTime.Now,
+            Email = "farghadani4747@gmail.com",
+            BankAccountNumber = "6219861057747882",
         };
 
         await SendAsync(command);
@@ -35,7 +45,7 @@ public class UpdateCustomerTests : BaseTestFixture
         var item = await FindAsync<Customer>(itemId);
 
         item.Should().NotBeNull();
-        item!.Title.Should().Be(command.Title);
+        item!.LastName.Should().Be(command.LastName);
         item.LastModified.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
     }
 }

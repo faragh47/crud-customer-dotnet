@@ -6,18 +6,24 @@ public record UpdateCustomerCommand : IRequest
 {
     public int Id { get; init; }
 
-    public string? Title { get; init; }
-
-    public bool Done { get; init; }
+    public string FirstName { get; set; } = "";
+    public string LastName { get; set; } = "";
+    public DateTime? DateOfBirth { get; set; }
+    public ulong PhoneNumber { get; set; }
+    public string Email { get; set; } = "";
+    public string BankAccountNumber { get; set; } = "";
 }
 
 public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public UpdateCustomerCommandHandler(IApplicationDbContext context)
+    public UpdateCustomerCommandHandler(IApplicationDbContext context,
+        IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public async Task Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
@@ -26,10 +32,8 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
         Guard.Against.NotFound(request.Id, entity);
-
-        entity.Title = request.Title;
-        entity.Done = request.Done;
-
+        entity = _mapper.Map(request, entity);
+        _context.Customers.Update(entity);
         await _context.SaveChangesAsync(cancellationToken);
     }
 }

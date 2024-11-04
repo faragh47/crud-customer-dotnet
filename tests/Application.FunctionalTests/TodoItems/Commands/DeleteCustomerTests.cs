@@ -22,13 +22,17 @@ public class DeleteCustomerTests : BaseTestFixture
     {
         var itemId = await SendAsync(new CreateCustomerCommand
         {
-            Title = "New Item"
+
+            FirstName = "محمدرضا",
+            LastName = "محمدرضا",
+            PhoneNumber = 9124798930,
+            DateOfBirth = DateTime.Now,
+            Email = "farghadani4747@gmail.com",
+            BankAccountNumber = "6219861057747882",
         });
 
         await SendAsync(new DeleteCustomerCommand(itemId));
-
         var item = await FindAsync<Customer>(itemId);
-
         item.Should().BeNull();
     }
 }

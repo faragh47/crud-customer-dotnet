@@ -8,13 +8,17 @@ public class Email : ValueObject
         @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
         RegexOptions.Compiled | RegexOptions.IgnoreCase
     );
+    public Email()
+    {
+        Value = "";
+    }
     public Email(string email)
     {
         if (!IsValid(email))
             throw new ArgumentException("Invalid email format.");
         Value = email;
     }
-    private static bool IsValid(string email)
+    public static bool IsValid(string email)
     {
         return EmailRegex.IsMatch(email);
     }

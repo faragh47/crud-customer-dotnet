@@ -2,13 +2,14 @@
 
 public class Customer : BaseAuditableEntity
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
     public DateTime? DateOfBirth { get; set; }
-    public PhoneNumber PhoneNumber { get; set; }
-    public Email Email { get; set; }
-    public BankAccountNumber BankAccountNumber { get; set; }
-    public Customer(string firstName,
+    public PhoneNumber? PhoneNumber { get; set; }
+    public Email? Email { get; set; }
+    public BankAccountNumber? BankAccountNumber { get; set; }
+
+    public Customer CreateCustomer(string firstName,
                     string lastName,
                     DateTime? dateOfBirth,
                     PhoneNumber phoneNumber,
@@ -21,6 +22,7 @@ public class Customer : BaseAuditableEntity
         PhoneNumber = phoneNumber;
         Email = email;
         BankAccountNumber = bankAccountNumber;
+        return this;
 
     }
 }

@@ -64,14 +64,11 @@ public class ApplicationDbContextInitialiser
 
     public async Task TrySeedAsync()
     {
-        // Default roles
-        var administratorRole = new IdentityRole(Roles.Administrator);
-
         if (!_context.Customers.Any())
         {
             _context.Customers.AddRange(new List<Customer>
             {
-                    new Customer("Mohammadreza","Farghadani",
+                    new Customer().CreateCustomer("Mohammadreza","Farghadani",
                     DateTime.Now,
                     new PhoneNumber(9124798930),
                     new Email("Farghadani4747@gmail.com"),

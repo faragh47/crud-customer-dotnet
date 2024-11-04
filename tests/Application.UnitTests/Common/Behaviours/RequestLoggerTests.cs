@@ -21,13 +21,31 @@ public class RequestLoggerTests
     public async Task ShouldCallGetUserNameAsyncOnceIfAuthenticated()
     {
         var requestLogger = new LoggingBehaviour<CreateCustomerCommand>(_logger.Object);
-        await requestLogger.Process(new CreateCustomerCommand { ListId = 1, Title = "title" }, new CancellationToken());
+        await requestLogger.Process(new CreateCustomerCommand
+        {
+
+            FirstName = "محمدرضا",
+            LastName = "محمدرضا",
+            PhoneNumber = 9124798930,
+            DateOfBirth = DateTime.Now,
+            Email = "farghadani4747@gmail.com",
+            BankAccountNumber = "6219861057747882",
+        }, new CancellationToken());
     }
 
     [Test]
     public async Task ShouldNotCallGetUserNameAsyncOnceIfUnauthenticated()
     {
         var requestLogger = new LoggingBehaviour<CreateCustomerCommand>(_logger.Object);
-        await requestLogger.Process(new CreateCustomerCommand { ListId = 1, Title = "title" }, new CancellationToken());
+        await requestLogger.Process(new CreateCustomerCommand
+        {
+
+            FirstName = "محمدرضا",
+            LastName = "محمدرضا",
+            PhoneNumber = 9124798930,
+            DateOfBirth = DateTime.Now,
+            Email = "farghadani4747@gmail.com",
+            BankAccountNumber = "6219861057747882",
+        }, new CancellationToken());
     }
 }

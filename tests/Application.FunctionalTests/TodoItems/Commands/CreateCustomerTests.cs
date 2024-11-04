@@ -20,15 +20,14 @@ public class CreateCustomerTests : BaseTestFixture
     [Test]
     public async Task ShouldCreateCustomer()
     {
-        var listId = await SendAsync(new CreateCustomerCommand
-        {
-            Title = "New List"
-        });
-
         var command = new CreateCustomerCommand
         {
-            ListId = listId,
-            Title = "Tasks"
+            FirstName = "محمدرضا",
+            LastName = "محمدرضا",
+            PhoneNumber = 9124798930,
+            DateOfBirth = DateTime.Now,
+            Email = "farghadani4747@gmail.com",
+            BankAccountNumber = "6219861057747882",
         };
 
         var itemId = await SendAsync(command);
@@ -36,9 +35,8 @@ public class CreateCustomerTests : BaseTestFixture
         var item = await FindAsync<Customer>(itemId);
 
         item.Should().NotBeNull();
-        item!.ListId.Should().Be(command.ListId);
-        item.Title.Should().Be(command.Title);
-        item.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
-        item.LastModified.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
+        item?.FirstName.Should().Be(command.FirstName);
+        item?.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
+        item?.LastModified.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
     }
 }

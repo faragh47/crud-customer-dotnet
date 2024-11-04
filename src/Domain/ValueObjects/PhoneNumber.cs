@@ -1,17 +1,21 @@
 ﻿using PhoneNumbers;
 namespace CleanArchitecture.Domain.ValueObjects;
-public class PhoneNumber:ValueObject
+public class PhoneNumber : ValueObject
 {
     public ulong Value { get; }
     private static readonly PhoneNumberUtil PhoneUtil = PhoneNumberUtil.GetInstance();
     public PhoneNumber(ulong value, string region = "IR") // Default to "IR" for Iran
     {
-        if (!IsValidMobileNumber(value.ToString(), region))
+        if (!IsValid(value.ToString(), region))
             throw new ArgumentException("Phone number is not a valid mobile number in Iran.");
         Value = value;
     }
+    private PhoneNumber()
+    {
+        Value = 0;
+    }
 
-    private static bool IsValidMobileNumber(string phoneNumber, string region)
+    public static bool IsValid(string phoneNumber, string region = "IR")
     {
         try
         {

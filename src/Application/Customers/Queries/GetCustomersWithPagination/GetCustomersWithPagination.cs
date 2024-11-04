@@ -6,7 +6,6 @@ namespace CleanArchitecture.Application.Customers.Queries.GetCustomersWithPagina
 
 public record GetCustomersWithPaginationQuery : IRequest<PaginatedList<CustomerBriefDto>>
 {
-    public int ListId { get; init; }
     public int PageNumber { get; init; } = 1;
     public int PageSize { get; init; } = 10;
 }
@@ -25,8 +24,7 @@ public class GetCustomersWithPaginationQueryHandler : IRequestHandler<GetCustome
     public async Task<PaginatedList<CustomerBriefDto>> Handle(GetCustomersWithPaginationQuery request, CancellationToken cancellationToken)
     {
         return await _context.Customers
-            .Where(x => x.ListId == request.ListId)
-            .OrderBy(x => x.Title)
+            .OrderBy(x => x.Created)
             .ProjectTo<CustomerBriefDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
