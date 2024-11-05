@@ -2,6 +2,7 @@
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Events;
 using CleanArchitecture.Domain.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Application.Customers.Commands.CreateCustomer;
 
@@ -32,9 +33,23 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
             new PhoneNumber(request.PhoneNumber),
             new Email(request.Email),
             new BankAccountNumber(request.BankAccountNumber));
+        await checkValidations(request);
         entity.AddDomainEvent(new CustomerCreatedEvent(entity));
         _context.Customers.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);
         return entity.Id;
+    }
+
+    private async Task checkValidations(CreateCustomerCommand request)
+    {
+        var emailExpression = new DuplicateEmailCustomerSpec(request.Email).IsSatisfiedBy();
+        if (await _context.Customers.AnyAsync(emailExpression))
+            throw new Exception("Customer with this Email is exist");
+        var expression = new DuplicateCustomerSpec(request.FirstName,
+            request.LastName,
+            request.DateOfBirth)
+            .IsSatisfiedBy();
+        if (await _context.Customers.AnyAsync(expression))
+            throw new Exception("Customer with this information is exist");
     }
 }

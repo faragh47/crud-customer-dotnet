@@ -14,7 +14,7 @@ public static class TestDatabaseFactory
     #endif
 #endif
 
-        await database.InitialiseAsync();
+        await database. InitialiseAsync();
 
         return database;
     }

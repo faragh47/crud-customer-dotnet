@@ -6,23 +6,13 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/TodoItems": {
+    "/api/Customers": {
       "get": {
         "tags": [
-          "TodoItems"
+          "Customers"
         ],
-        "operationId": "GetTodoItemsWithPagination",
+        "operationId": "GetCustomersWithPagination",
         "parameters": [
-          {
-            "name": "ListId",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          },
           {
             "name": "PageNumber",
             "in": "query",
@@ -50,7 +40,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaginatedListOfTodoItemBriefDto"
+                  "$ref": "#/components/schemas/PaginatedListOfCustomerBriefDto"
                 }
               }
             }
@@ -59,15 +49,15 @@
       },
       "post": {
         "tags": [
-          "TodoItems"
+          "Customers"
         ],
-        "operationId": "CreateTodoItem",
+        "operationId": "CreateCustomer",
         "requestBody": {
           "x-name": "command",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateTodoItemCommand"
+                "$ref": "#/components/schemas/CreateCustomerCommand"
               }
             }
           },
@@ -89,12 +79,12 @@
         }
       }
     },
-    "/api/TodoItems/{id}": {
+    "/api/Customers/{id}": {
       "put": {
         "tags": [
-          "TodoItems"
+          "Customers"
         ],
-        "operationId": "UpdateTodoItem",
+        "operationId": "UpdateCustomer",
         "parameters": [
           {
             "name": "id",
@@ -112,7 +102,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateTodoItemCommand"
+                "$ref": "#/components/schemas/UpdateCustomerCommand"
               }
             }
           },
@@ -127,9 +117,9 @@
       },
       "delete": {
         "tags": [
-          "TodoItems"
+          "Customers"
         ],
-        "operationId": "DeleteTodoItem",
+        "operationId": "DeleteCustomer",
         "parameters": [
           {
             "name": "id",
@@ -149,12 +139,12 @@
         }
       }
     },
-    "/api/TodoItems/UpdateDetail/{id}": {
+    "/api/Customers/UpdateDetail/{id}": {
       "put": {
         "tags": [
-          "TodoItems"
+          "Customers"
         ],
-        "operationId": "UpdateTodoItemDetail",
+        "operationId": "UpdateCustomerDetail",
         "parameters": [
           {
             "name": "id",
@@ -172,7 +162,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateTodoItemDetailCommand"
+                "$ref": "#/components/schemas/UpdateCustomerDetailCommand"
               }
             }
           },
@@ -186,151 +176,17 @@
         }
       }
     },
-    "/api/TodoLists": {
-      "get": {
-        "tags": [
-          "TodoLists"
-        ],
-        "operationId": "GetTodoLists",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TodosVm"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "TodoLists"
-        ],
-        "operationId": "CreateTodoList",
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTodoListCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/TodoLists/{id}": {
-      "put": {
-        "tags": [
-          "TodoLists"
-        ],
-        "operationId": "UpdateTodoList",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTodoListCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 2
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "TodoLists"
-        ],
-        "operationId": "DeleteTodoList",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/WeatherForecasts": {
-      "get": {
-        "tags": [
-          "WeatherForecasts"
-        ],
-        "operationId": "GetWeatherForecasts",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
   },
   "components": {
     "schemas": {
-      "PaginatedListOfTodoItemBriefDto": {
+      "PaginatedListOfCustomerBriefDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "items": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TodoItemBriefDto"
+              "$ref": "#/components/schemas/CustomerBriefDto"
             }
           },
           "pageNumber": {
@@ -353,78 +209,91 @@
           }
         }
       },
-      "TodoItemBriefDto": {
+      "CustomerBriefDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
+          "firstName": {
+            "type": "string"
           },
-          "listId": {
-            "type": "integer",
-            "format": "int32"
+          "lastName": {
+            "type": "string"
           },
-          "title": {
+          "dateOfBirth": {
             "type": "string",
+            "format": "date-time",
             "nullable": true
           },
-          "done": {
-            "type": "boolean"
+          "phoneNumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "bankAccountNumber": {
+            "type": "string"
           }
         }
       },
-      "CreateTodoItemCommand": {
+      "CreateCustomerCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "listId": {
-            "type": "integer",
-            "format": "int32"
+          "firstName": {
+            "type": "string"
           },
-          "title": {
+          "lastName": {
+            "type": "string"
+          },
+          "dateOfBirth": {
             "type": "string",
+            "format": "date-time",
             "nullable": true
+          },
+          "phoneNumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "bankAccountNumber": {
+            "type": "string"
           }
-        }
+        },
+        "required": [ "firstName", "lastName", "phoneNumber", "email", "bankAccountNumber" ]
       },
-      "UpdateTodoItemCommand": {
+      "UpdateCustomerCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
+          "firstName": {
+            "type": "string"
           },
-          "title": {
+          "lastName": {
+            "type": "string"
+          },
+          "dateOfBirth": {
             "type": "string",
+            "format": "date-time",
             "nullable": true
           },
-          "done": {
-            "type": "boolean"
-          }
-        }
-      },
-      "UpdateTodoItemDetailCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
+          "phoneNumber": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
-          "listId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "priority": {
-            "$ref": "#/components/schemas/PriorityLevel"
-          },
-          "note": {
+          "email": {
             "type": "string",
-            "nullable": true
+            "format": "email"
+          },
+          "bankAccountNumber": {
+            "type": "string"
           }
-        }
+        },
+        "required": [ "firstName", "lastName", "phoneNumber", "email", "bankAccountNumber" ]
       },
       "PriorityLevel": {
         "type": "integer",
@@ -442,24 +311,6 @@
           3
         ]
       },
-      "TodosVm": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "priorityLevels": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/LookupDto"
-            }
-          },
-          "lists": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TodoListDto"
-            }
-          }
-        }
-      },
       "LookupDto": {
         "type": "object",
         "additionalProperties": false,
@@ -469,105 +320,6 @@
             "format": "int32"
           },
           "title": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "TodoListDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "colour": {
-            "type": "string",
-            "nullable": true
-          },
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TodoItemDto"
-            }
-          }
-        }
-      },
-      "TodoItemDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "listId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "done": {
-            "type": "boolean"
-          },
-          "priority": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "note": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "CreateTodoListCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "title": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "UpdateTodoListCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "WeatherForecast": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "temperatureC": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "temperatureF": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "summary": {
             "type": "string",
             "nullable": true
           }

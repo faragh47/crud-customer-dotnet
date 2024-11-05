@@ -11,7 +11,6 @@ public class Customers : EndpointGroupBase
     public override void Map(WebApplication app)
     {
         app.MapGroup(this)
-            .RequireAuthorization()
             .MapGet(GetCustomersWithPagination)
             .MapPost(CreateCustomer)
             .MapPut(UpdateCustomer, "{id}")

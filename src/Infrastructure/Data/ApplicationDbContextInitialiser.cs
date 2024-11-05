@@ -72,7 +72,7 @@ public class ApplicationDbContextInitialiser
                     DateTime.Now,
                     new PhoneNumber(9124798930),
                     new Email("Farghadani4747@gmail.com"),
-                    new BankAccountNumber("123456789"))
+                    new BankAccountNumber("12345678910"))
             });
             await _context.SaveChangesAsync();
         }
