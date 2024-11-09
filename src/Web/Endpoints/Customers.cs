@@ -31,12 +31,12 @@ public class Customers : EndpointGroupBase
     {
         if (id != command.Id) return Results.BadRequest();
         await sender.Send(command);
-        return Results.NoContent();
+        return Results.Accepted();
     }
 
     public async Task<IResult> DeleteCustomer(ISender sender, int id)
     {
         await sender.Send(new DeleteCustomerCommand(id));
-        return Results.NoContent();
+        return Results.Accepted();
     }
 }

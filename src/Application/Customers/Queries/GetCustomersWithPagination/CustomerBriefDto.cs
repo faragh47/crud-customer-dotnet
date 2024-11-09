@@ -4,18 +4,10 @@ namespace CleanArchitecture.Application.Customers.Queries.GetCustomersWithPagina
 
 public class CustomerBriefDto
 {
-    public string FirstName { get; set; } = "";
-    public string LastName { get; set; } = "";
+    public string? FirstName { get; set; } = "";
+    public string? LastName { get; set; } = "";
     public DateTime? DateOfBirth { get; set; }
-    public ulong PhoneNumber { get; set; }
-    public string Email { get; set; } = "";
-    public string BankAccountNumber { get; set; } = "";
-
-    private class Mapping : Profile
-    {
-        public Mapping()
-        {
-            CreateMap<Customer, CustomerBriefDto>();
-        }
-    }
+    public ulong? PhoneNumber { get; set; }
+    public string? Email { get; set; } = "";
+    public string? BankAccountNumber { get; set; } = "";
 }

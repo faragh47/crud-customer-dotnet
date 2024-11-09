@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Application.Common.Interfaces;
+using CleanArchitecture.Domain.ValueObjects;
 
 namespace CleanArchitecture.Application.Customers.Commands.UpdateCustomer;
 
@@ -28,11 +29,16 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
 
     public async Task Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Customers
+        var entity =  await _context.Customers
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
         Guard.Against.NotFound(request.Id, entity);
-        entity = _mapper.Map(request, entity);
+        entity.PhoneNumber=new PhoneNumber(request.PhoneNumber);
+        entity.Email= new Email(request.Email);
+        entity.FirstName=request.FirstName;
+        entity.LastName=request.LastName;
+        entity.BankAccountNumber=new BankAccountNumber(request.BankAccountNumber);
+        entity.DateOfBirth=request.DateOfBirth;
         _context.Customers.Update(entity);
         await _context.SaveChangesAsync(cancellationToken);
     }

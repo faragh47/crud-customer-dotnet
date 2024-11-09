@@ -13,9 +13,7 @@ services:
     ports:
       - "8080"
       - "8081"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
 
   sql_server:
     image: mcr.microsoft.com/azure-sql-edge

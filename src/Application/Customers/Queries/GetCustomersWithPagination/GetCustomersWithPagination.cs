@@ -23,9 +23,25 @@ public class GetCustomersWithPaginationQueryHandler : IRequestHandler<GetCustome
 
     public async Task<PaginatedList<CustomerBriefDto>> Handle(GetCustomersWithPaginationQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Customers
-            .OrderBy(x => x.Created)
-            .ProjectTo<CustomerBriefDto>(_mapper.ConfigurationProvider)
-            .PaginatedListAsync(request.PageNumber, request.PageSize);
+        var customers = await _context.Customers
+             .OrderBy(x => x.Created)
+             .PaginatedListAsync(request.PageNumber, request.PageSize);
+
+        List<CustomerBriefDto> items = new();
+        foreach (var item in customers.Items)
+        {
+            items.Add(new CustomerBriefDto
+            { 
+                FirstName=item?.FirstName,
+                LastName=item?.LastName,
+                BankAccountNumber=item?.BankAccountNumber?.Value,
+                Email=item?.Email?.Value,
+                DateOfBirth=item?.DateOfBirth,
+                PhoneNumber=item?.PhoneNumber?.Value
+            });
+        }
+        PaginatedList<CustomerBriefDto> paginatedList =
+            new PaginatedList<CustomerBriefDto>(items, customers.TotalCount, request.PageNumber, request.PageSize);
+        return paginatedList;
     }
 }
